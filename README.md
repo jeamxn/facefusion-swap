@@ -61,6 +61,11 @@ curl -L https://thispersondoesnotexist.com/random-person.jpeg -o faces/synthetic
 
 `run.sh`가 브라우저에서 <http://127.0.0.1:7860> 을 엽니다.
 
+> **반드시 터미널 앱(Terminal / iTerm)에서 직접 실행하세요.**
+> macOS는 카메라 접근을 실행 주체별로 허가합니다. 스크립트·자동화 도구로 간접 실행하면
+> `OpenCV: not authorized to capture video` 가 뜨고 카메라 목록이 비어 있게 됩니다.
+> 처음 실행할 때 뜨는 카메라 접근 허용 창에서 **허용**을 누르세요.
+
 ---
 
 ## 사용법
@@ -135,8 +140,9 @@ FF_EXTRA="--face-swapper-model inswapper_128_fp16" ./run.sh
 
 ## 문제 해결
 
-**카메라 목록이 `none` 으로만 나옵니다**
-터미널에 카메라 권한이 없습니다. `시스템 설정 → 개인정보 보호 및 보안 → 카메라` 에서 사용 중인 터미널 앱(Terminal / iTerm / VS Code)을 허용하고 터미널을 재시작하세요.
+**카메라 목록이 `none` 이거나 `OpenCV: not authorized to capture video` 가 뜹니다**
+터미널에 카메라 권한이 없습니다. `시스템 설정 → 개인정보 보호 및 보안 → 카메라` 에서 사용 중인 터미널 앱(Terminal / iTerm / VS Code)을 허용하고 **터미널을 완전히 종료 후 재실행**하세요.
+목록에 터미널 앱이 아예 없다면, 터미널에서 `./run.sh` 를 한 번 실행해 권한 요청을 발생시킨 뒤 다시 확인하면 됩니다.
 
 **OBS 미디어 소스가 검은 화면입니다**
 - FaceFusion에서 **START** 를 눌렀는지, MODE가 `udp` 인지 확인
