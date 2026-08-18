@@ -156,6 +156,12 @@ FF_EXTRA="--face-swapper-model inswapper_128_fp16" ./run.sh
 **`CoreMLExecutionProvider를 찾지 못했습니다` 경고**
 CPU로 동작하게 되어 매우 느립니다. Apple Silicon이 맞는지(`uname -m` → `arm64`) 확인하고 `./setup.sh` 를 다시 실행하세요.
 
+**OBS 없이 바로 가상 카메라로 잡히게 할 수는 없나요?**
+불가능합니다. macOS에서 가상 카메라를 만들려면 시스템 확장(Camera Extension)이 필요하고, 그 확장은 Apple Developer 서명이 있어야 배포됩니다.
+이 저장소는 OBS가 제공하는 확장(`com.obsproject.obs-studio.mac-camera-extension`)을 빌려 쓰는 구조라 OBS 실행이 필수입니다.
+파이썬에서 직접 송출하는 `pyvirtualcam` 계열은 구형 DAL 플러그인에 의존하는데, macOS 12.3에서 폐기되어 최신 OBS에는 포함되지 않습니다.
+OBS 설정은 최초 1회만 하면 다음 실행부터 그대로 유지되며, OBS는 최소화해두고 쓰면 됩니다.
+
 **설치를 처음부터 다시 하고 싶습니다**
 ```bash
 rm -rf .venv vendor
