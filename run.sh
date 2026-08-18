@@ -35,7 +35,7 @@ if [[ -z "$SOURCE" ]]; then
     faces/ 폴더에 이미지 1장을 넣고 다시 실행하세요.
     실존 인물 사진 대신 AI 생성 가상 얼굴을 사용하세요.
 
-      curl -L https://thispersondoesnotexist.com -o faces/synthetic.jpg
+      curl -L https://thispersondoesnotexist.com/random-person.jpeg -o faces/synthetic.jpg
 EOF
 	exit 1
 fi

@@ -37,7 +37,7 @@ udp://127.0.0.1:27000
 | 기기 | Apple Silicon Mac (M1 이상). **Intel Mac은 불가** — CoreML 가속이 없어 실시간이 안 나옵니다 |
 | OS | macOS 13 Ventura 이상 |
 | RAM | 최소 16GB (권장 24GB+) |
-| 디스크 | 약 8GB (모델 + 의존성) |
+| 디스크 | 약 5GB (의존성 + 얼굴 대체 모델) |
 | 사전 설치 | [Homebrew](https://brew.sh) |
 
 나머지(ffmpeg, uv, OBS, Python 3.12, FaceFusion 3.8.2)는 `setup.sh`가 전부 알아서 설치합니다.
@@ -51,9 +51,12 @@ Python은 **uv**로 관리하므로 시스템 파이썬을 오염시키지 않�
 git clone https://github.com/jeamxn/facefusion-swap.git
 cd facefusion-swap
 
-./setup.sh                                                   # 최초 1회 (10~25분)
-curl -L https://thispersondoesnotexist.com -o faces/synthetic.jpg   # 가상 얼굴 1장
-./run.sh                                                     # 실행
+./setup.sh        # 최초 1회 (5~10분)
+
+# 대체할 가상 얼굴 1장 준비 (AI 생성 얼굴)
+curl -L https://thispersondoesnotexist.com/random-person.jpeg -o faces/synthetic.jpg
+
+./run.sh          # 실행
 ```
 
 `run.sh`가 브라우저에서 <http://127.0.0.1:7860> 을 엽니다.
@@ -140,8 +143,9 @@ FF_EXTRA="--face-swapper-model inswapper_128_fp16" ./run.sh
 - 포트 점유 확인: `lsof -nP -iUDP:27000`
 - OBS 미디어 소스를 우클릭 → 새로고침
 
-**첫 실행이 너무 느립니다**
-모델을 내려받는 중입니다(수 GB). `setup.sh`에서 미리 받아두지만, 선택한 모델에 따라 실행 시 추가 다운로드가 발생할 수 있습니다.
+**첫 실행에서 START를 눌렀는데 한참 멈춰 있습니다**
+얼굴 대체 모델을 내려받는 중입니다(약 2GB, 최초 1회). 터미널에 다운로드 진행률이 표시됩니다.
+오프라인 환경에서 미리 전부 받아두려면 `FF_PREFETCH=1 ./setup.sh` 로 설치하세요. 다만 다른 프로세서(나이 변조, 립싱크 등) 모델까지 받아 8GB 이상을 사용합니다.
 
 **`CoreMLExecutionProvider를 찾지 못했습니다` 경고**
 CPU로 동작하게 되어 매우 느립니다. Apple Silicon이 맞는지(`uname -m` → `arm64`) 확인하고 `./setup.sh` 를 다시 실행하세요.
