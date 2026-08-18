@@ -1,0 +1,9 @@
+.venv/
+vendor/
+__pycache__/
+.DS_Store
+
+# 얼굴 이미지는 커밋하지 않는다 (개인정보/초상권)
+faces/*
+!faces/.gitkeep
+setup.log
